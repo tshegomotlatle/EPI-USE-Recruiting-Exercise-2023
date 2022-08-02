@@ -1,14 +1,20 @@
-<mat-toolbar>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>My App</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
-  </mat-toolbar>
-  
+<div class="app-header">
+
+</div>
+<nav id="sidebarMenu" class="sidebar ">
+    <div class="userInformation">
+
+    </div>
+    <div class="hierarchyContainer navItem">
+        <span class="material-icons">account_tree</span>
+        <a routerLink="/hierarchy">Hierarchy</a>
+    </div>
+    <div class="scheduleContainer navItem">
+        <span class="material-icons">calendar_month</span>
+        <a routerLink="/schedule">Schedule</a>
+    </div>
+    <div class="logoutContainer navItem">
+        <span class="material-icons">logout</span>
+        <a class="logoutLink" (click)="logout()">Logout</a>
+    </div>
+</nav>
