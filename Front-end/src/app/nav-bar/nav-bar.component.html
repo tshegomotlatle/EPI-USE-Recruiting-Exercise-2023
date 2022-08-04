@@ -1,7 +1,5 @@
-<div class="app-header">
 
-</div>
-<nav id="sidebarMenu" class="sidebar ">
+<!-- <div id="sidebarMenu" class="sidebar ">
     <div class="userInformation">
 
     </div>
@@ -17,4 +15,38 @@
         <span class="material-icons">logout</span>
         <a class="logoutLink" (click)="logout()">Logout</a>
     </div>
+</div> -->
+<nav class="navbars">
+    <ul class="navbar-nav">
+        <li class="navbar-item">
+            <a class="navbar-link">
+                <span class="material-icons">account_circle</span>
+                <span class="navInfo">
+                    <div>
+                        John Doe <br>
+                        CEO
+
+                    </div>
+                </span>
+            </a>
+        </li>
+        <li class="navbar-item">
+            <a class="navbar-link" routerLink="/hierarchy">
+                <span class="material-icons">account_tree</span>
+                <span class="navInfo">Hierarchy</span>
+            </a>
+        </li>
+        <li class="navbar-item">
+            <a class="navbar-link" routerLink="/schedule">
+                <span class="material-icons">calendar_month</span>
+                <span class="navInfo">Schedule</span>
+            </a>
+        </li>
+        <li class="navbar-item p-auto">
+            <a class="navbar-link" (click)="logout()">
+                <span class="material-icons" >logout</span>
+                <span class="navInfo">Logout</span>
+            </a>
+        </li>
+    </ul>
 </nav>
