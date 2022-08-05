@@ -11,6 +11,11 @@ import { HierarchyViewComponent } from './hierarchy-view/hierarchy-view.componen
 import { FormsModule } from '@angular/forms';
 import { HierarchyTreeComponent } from './hierarchy-tree/hierarchy-tree.component';
 import { AdminConsoleComponent } from './admin-console/admin-console.component';
+import { environment } from 'src/environments/environment';
+
+// import { AngularFireModule } from '@angular/fire';
+import {AngularFireModule} from '@angular/fire/compat'
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore/'
 
 @NgModule({
   declarations: [
@@ -26,7 +31,10 @@ import { AdminConsoleComponent } from './admin-console/admin-console.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
