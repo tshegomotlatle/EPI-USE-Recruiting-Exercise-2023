@@ -10,6 +10,7 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { HierarchyViewComponent } from './hierarchy-view/hierarchy-view.component';
 import { FormsModule } from '@angular/forms';
 import { HierarchyTreeComponent } from './hierarchy-tree/hierarchy-tree.component';
+import { AdminConsoleComponent } from './admin-console/admin-console.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { HierarchyTreeComponent } from './hierarchy-tree/hierarchy-tree.componen
     ScheduleComponent,
     HierarchyViewComponent,
     HierarchyTreeComponent,
+    AdminConsoleComponent,
   ],
   imports: [
     BrowserModule,
