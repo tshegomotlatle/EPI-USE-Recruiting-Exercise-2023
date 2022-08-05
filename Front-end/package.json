@@ -25,6 +25,7 @@
     "bootstrap": "^5.2.0",
     "core-js": "3.6.5",
     "firebase": "^9.9.2",
+    "firebase-tools": "^11.4.2",
     "jquery": "^3.6.0",
     "rxjs": "~7.5.0",
     "treeflex": "^2.0.1",
