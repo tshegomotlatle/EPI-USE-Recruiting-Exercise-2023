@@ -15,10 +15,13 @@
                     <input (change)="onChange($event)" class="form-control" type="file" id="formFile">
                 </div>
                 <div class="row pt-5">
-                    <button (click)="store()" type="button" class="btn mx-1 btn-outline-secondary btn-block col">Store</button>
+                    <button (click)="storeFile()" type="button" class="btn mx-1 btn-outline-secondary btn-block col">Store</button>
                     <button (click)="update()" type="button" class="btn mx-1 btn-outline-secondary btn-block col">Update</button>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="test">
+        {{users}}
     </div>
 </div>
