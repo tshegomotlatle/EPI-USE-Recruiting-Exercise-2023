@@ -1,1 +1,20 @@
-<p>admin-console works!</p>
+<div class="adminContainer">
+    <div class="card">
+        <div class="card-body row">
+            <div class="col-4 ">
+                <div class="border-bottom options {{selectedSystem}}" (click)="changeActive('system')">
+                    Sysetem Data
+                </div>
+                <div class="border-bottom options {{selectedUser}}" (click)="changeActive('user')">
+                    User Data
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Upload {{selectedOption}} data to database</label>
+                    <input (change)="onChange($event)" class="form-control" type="file" id="formFile">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

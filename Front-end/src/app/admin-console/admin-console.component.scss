@@ -1,0 +1,16 @@
+.adminContainer{
+    margin-left: 5rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
+    padding-top: 5rem;
+}
+
+.options{
+    padding: 2rem 3rem
+}
+
+.options:hover, .selected{
+    background-color: var(--bg-primary);
+    color: white;
+}
+
