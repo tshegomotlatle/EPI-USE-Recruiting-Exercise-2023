@@ -1,39 +1,16 @@
-<div class="container">
-  <div class="tf-tree tf-gap-lg pt-5">
-    <ul>
-      <li>
-        <span class="tf-nc">1</span>
-        <ul>
-          <li>
-            <span class="tf-nc">2</span>
-            <ul>
-              <li><span class="tf-nc">4</span></li>
-              <li><span class="tf-nc">5</span></li>
-            </ul>
-          </li>
-          <li>
-            <span class="tf-nc">3</span>
-            <ul>
-              <li><span class="tf-nc">6</span></li>
-              <li><span class="tf-nc">7</span></li>
-            </ul>
-          </li>
-          <li>
-            <span class="tf-nc">3</span>
-            <ul>
-              <li><span class="tf-nc">6</span></li>
-              <li><span class="tf-nc">7</span></li>
-            </ul>
-          </li>
-          <li>
-            <span class="tf-nc">3</span>
-            <ul>
-              <li><span class="tf-nc">6</span></li>
-              <li><span class="tf-nc">7</span></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
+<div class="containerHierachy">
+  <div class="viewToggle">
+    <div class="form-check form-switch pt-5 pr-5">
+      <label class="form-check-label" for="mySwitch">View Tree</label>
+      <input class="form-check-input" type="checkbox" id="mySwitch" name="tree" [(ngModel)]="viewSelected">
+    </div>
+  </div>
+
+  <div *ngIf="viewSelected">
+    <app-hierarchy-tree></app-hierarchy-tree>
+  </div>
+  <div *ngIf="!viewSelected">
+    <app-hierarchy-view></app-hierarchy-view>
   </div>
 </div>
+ 

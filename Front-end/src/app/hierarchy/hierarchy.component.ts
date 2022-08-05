@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HierarchyComponent implements OnInit {
 
+  viewSelected!: boolean
+
   constructor() { }
 
   ngOnInit(): void {
+    this.viewSelected = false;
   }
 
 }
