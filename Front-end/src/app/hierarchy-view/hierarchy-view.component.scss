@@ -1,0 +1,25 @@
+div#accordion {
+    width: 90%;
+}
+
+.material-icons {
+    font-size: 100px;
+    border: 1px solid black;
+}
+
+div#accordion {
+    position: absolute;
+    z-index: 0;
+}
+
+.personalInfo {
+    width: 25rem;
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.schedule {
+    display: flex;
+    align-items: center;
+}

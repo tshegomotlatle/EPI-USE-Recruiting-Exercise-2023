@@ -22,6 +22,7 @@
     "@angular/router": "~13.2.0",
     "@popperjs/core": "^2.11.5",
     "bootstrap": "^5.2.0",
+    "jquery": "^3.6.0",
     "rxjs": "~7.5.0",
     "treeflex": "^2.0.1",
     "tslib": "^2.3.0",
