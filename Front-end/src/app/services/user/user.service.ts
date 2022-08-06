@@ -1,67 +1,89 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { User } from "../../interfaces/user"
+import { Employee } from 'src/app/interfaces/employee';
+import { User } from 'src/app/interfaces/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private store : AngularFirestore) {
+  constructor(private store : AngularFirestore){
 
   }
-
-  public loadAllusers(users : User [])
-  {
-    for (let index = 0; index < users.length; index++) {
-      const exisitingUserRef = this.store.collection('users', ref => ref.where('id', '==', users[index].id));
-      const exisitingUser = exisitingUserRef.valueChanges();
-      exisitingUser.subscribe((response) => {
-        if (response.length == 0)
-        {
-          this.store.collection("users").add(users[index]).catch(
-            () => {alert("An error occured while storing user data")}
-          )
-        }
-      })
-    }
-    return true
-  }
-
-  public loadEmployeeData(employees : any [])
-  {
-    for (let k = 0; k < employees.length; k++) {
-      const employeeRef = this.store.collection('users', ref => ref.where('id', '==', employees[k].id));
-      const employee = employeeRef.valueChanges();
-      employee.subscribe((response) => {
-        if (response.length > 0)
-        {
-          this.store.collection("employees").add(employees[k]).catch(
-            () => {alert("An error occured while storing user data")}
-          )
-        }
-      });
-    }
-    return true;
-  }
-
-  public loadScheduleData(schedules : any [])
-  {
-    for (let k = 0; k < schedules.length; k++) {
-      const scheduleRef = this.store.collection('users', ref => ref.where('id', '==', schedules[k].id));
-      const schedule = scheduleRef.valueChanges();
-      schedule.subscribe((response) => {
-        if (response.length > 0)
-        {
-          this.store.collection("schedules").add(schedules[k]).catch(
-            () => {alert("An error occured while storing user data")}
-          )
-        }
-      });
-    }
-    return true;
-  }
-
   
+  getEmployeeData(id : string)  {
+    
+    const userRef = this.store.collection('employees', ref => ref.where('id', '==', id));
+      const user = userRef.valueChanges();
+      return new Promise<Employee>((resolve, reject) =>{
+        user.subscribe((response) => {
+          if (response.length > 0)
+           resolve(response[0] as Employee)
+          else
+            reject(null)
+        });
+      })
+
+  }
+
+  async login(username : string, password : string){
+
+    return this.getUserDataUsername(username)
+    .then(
+      (user) =>{
+        console.log(user);
+        localStorage.setItem("loggedIn","true")
+        localStorage.setItem("userId", user.id)
+        return true;
+      }
+    )
+    .catch(
+      () =>{
+        return false;
+      }
+    )
+    
+    
+  }
+
+  getUserDataUsername(username : string) 
+  {
+    const userRef = this.store.collection('users', ref => ref.where('username', '==', username));
+      const user = userRef.valueChanges();
+      return new Promise<User>((resolve, reject) =>{
+        user.subscribe((response) => {
+          if (response.length > 0)
+           resolve(response[0] as User)
+          else
+            reject(null)
+        });
+      })
+  }
+
+  getUserDataId(id : string) 
+  {
+    const userRef = this.store.collection('users', ref => ref.where('id', '==', id));
+      const user = userRef.valueChanges();
+      return new Promise<User>((resolve, reject) =>{
+        user.subscribe((response) => {
+          if (response.length > 0)
+           resolve(response[0] as User)
+          else
+            reject(null)
+        });
+      })
+  }
+
+  getSessionData() {
+    return {
+      loggedIn : localStorage.getItem("loggedIn"),
+      userId : localStorage.getItem("userId")
+    }
+  }
+
+  logout(){
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("userId");
+  }
 }

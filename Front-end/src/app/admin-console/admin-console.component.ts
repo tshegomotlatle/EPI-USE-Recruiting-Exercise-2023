@@ -1,13 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { Employee } from '../interfaces/employee';
+import { Schedules } from '../interfaces/schedules';
 import { User } from '../interfaces/user';
-import { UserService } from '../services/user/user.service';
+import { AdminService } from '../services/admin/admin.service';
 
-interface registered{
+interface Registered{
   registered_users : [
     User
   ];
+}
+
+interface SystemData{
+  system_data : {
+    employees : [Employee],
+    schedules : [Schedules]
+  }
 }
 
 @Component({
@@ -20,55 +29,33 @@ export class AdminConsoleComponent implements OnInit {
   selectedUser!: string;
   selectedSystem!: string;
   system!: boolean;
-  dataToStore! : registered;
+  dataToStoreRegistered! : Registered | null;
+  dataToStoreSystem! : SystemData | null;
   
   usersCollection! : AngularFirestoreCollection<User>
   users! : Observable<User[]>
   user!: User;
+  selectedFile: any;
 
 
 
   constructor(public store : AngularFirestore,
-    public userService : UserService 
+    public adminService : AdminService 
     ) {}
 
   ngOnInit(): void {
     this.selectedOption = 'system';
     this.selectedSystem = 'selected';
-    // this.usersCollection = this.store.collection("users");
-    // this.users = this.usersCollection.valueChanges();
-    // this.users.subscribe(
-    //   (response) =>{
-    //     console.log(response);
-        
-    //   }
-    // )
-    // this.user.first_name = "TshegoTesting";
-    // this.user.surname = "TshegoTesting";
-    // this.user.username = "TshegoTesting";
-    // this.user.password = "TshegoTesting";
-
-    this.user = {
-      first_name : "Tshego",
-      id : "ufgwlefigbweifgvbw",
-      surname : "Motlatle",
-      username : "Motlatle",
-      password : "Motlatle",
-    }
-    console.log(this.user);
-    
-    
+    this.dataToStoreRegistered = null;
   }
 
   changeActive(option: string): void {
     this.selectedOption = option;
 
     if (this.selectedOption == 'user') {
-      console.log('user');
       this.selectedSystem = '';
       this.selectedUser = 'selected';
     } else if (this.selectedOption == 'system') {
-      console.log('system');
       this.selectedSystem = 'selected';
       this.selectedUser = '';
     } else {
@@ -77,14 +64,21 @@ export class AdminConsoleComponent implements OnInit {
   }
 
   onChange(event: any): void {
-    const selectedFile = event.target.files[0];
+    this.selectedFile = event.target.files[0];
     const fileReader = new FileReader();
-    fileReader.readAsText(selectedFile, 'UTF-8');
+    fileReader.readAsText(this.selectedFile, 'UTF-8');
     fileReader.onload = () => {
-      const temp: string = fileReader.result as string;
-      // console.log(temp);
-      
-      this.dataToStore = JSON.parse(temp)
+      if (this.selectedOption == 'user')
+      {
+        const temp: string = fileReader.result as string;
+        this.dataToStoreRegistered = JSON.parse(temp)
+      }
+      else
+      {
+        const temp: string = fileReader.result as string;
+        this.dataToStoreSystem = JSON.parse(temp)
+
+      }
     };
     fileReader.onerror = (error) => {
       console.log(error);
@@ -92,11 +86,34 @@ export class AdminConsoleComponent implements OnInit {
   }
 
   storeFile(): void {
+
     
-    this.userService.loadAllusers(this.dataToStore.registered_users)
+    if (this.selectedFile !== undefined) //Check if file has been chosen
+    {
+      //Checks what type of file the user is submitting
+      if (this.selectedOption == 'user') {
+        if (this.dataToStoreRegistered !== null)
+        this.adminService.loadAllusers(this.dataToStoreRegistered.registered_users)
+      } else  {
+        if (this.dataToStoreSystem !== null)
+        {
+          console.log(this.dataToStoreSystem.system_data.employees);
+          
+          this.adminService.loadEmployeeData(this.dataToStoreSystem.system_data.employees);
+          this.adminService.loadScheduleData(this.dataToStoreSystem.system_data.schedules);
+        }
+      }
+      
+      alert("Sucessfully added system data")
+      
+    }
+    else
+    {
+      alert("Select a file")
+    }
   }
   
   update(): void {
-    console.log(this.dataToStore);
+    console.log(this.dataToStoreRegistered);
   }
 }

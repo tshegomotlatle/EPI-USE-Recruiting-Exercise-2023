@@ -1,0 +1,34 @@
+.loginContainer{
+    padding-top: 5rem;
+    margin-left: 5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.loginForm{
+    width: 50%;
+}
+
+img {
+    height: 230px;
+}
+
+.logoContainer
+{
+    display: flex;
+    justify-content: center;
+}
+
+.buttonContainer
+{
+    display: flex;
+    justify-content: center;
+}
+
+button.btn.btn-outline-dark {
+    width: 35%;
+}
+
+button.btn.btn-outline-dark:hover {
+    background-color: var(--bg-primary);
+}

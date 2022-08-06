@@ -1,7 +1,7 @@
 <div class="adminContainer">
     <div class="card">
-        <div class="card-body row">
-            <div class="col-4 ">
+        <div class="card-body row m-2">
+            <div class="col-4  optionsMenu">
                 <div class="border-bottom options {{selectedSystem}}" (click)="changeActive('system')">
                     Sysetem Data
                 </div>
@@ -9,18 +9,15 @@
                     User Data
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-8 settings">
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Upload {{selectedOption}} data to database</label>
-                    <input (change)="onChange($event)" class="form-control" type="file" id="formFile">
+                    <input (change)="onChange($event)" class="form-control" type="file" id="formFile" accept=".json">
                 </div>
-                <div class="pt-5">
+                <div class="pt-5 buttonContainer">
                     <button (click)="storeFile()" type="button" class="btn mx-1 btn-outline-secondary btn-block ">Store</button>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="test">
-        {{users}}
     </div>
 </div>

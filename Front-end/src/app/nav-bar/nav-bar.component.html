@@ -23,9 +23,8 @@
                 <span class="material-icons">account_circle</span>
                 <span class="navInfo">
                     <div>
-                        John Doe <br>
-                        CEO
-
+                        {{user.first_name }} {{user.surname }} <br>
+                        {{employeeInfo.title}}
                     </div>
                 </span>
             </a>
@@ -42,7 +41,7 @@
                 <span class="navInfo">Schedule</span>
             </a>
         </li>
-        <li class="navbar-item">
+        <li class="navbar-item" *ngIf="id == '1'">
             <a class="navbar-link" routerLink="/admin">
                 <span class="material-icons">settings</span>
                 <span class="navInfo">Admin Settings</span>

@@ -1,7 +1,7 @@
 .adminContainer{
     margin-left: 5rem;
-    padding-left: 10rem;
-    padding-right: 10rem;
+    padding-left: 7rem;
+    padding-right: 7rem;
     padding-top: 5rem;
 }
 
@@ -14,3 +14,15 @@
     color: white;
 }
 
+button.btn.mx-1.btn-outline-secondary.btn-block {
+    width: 50%;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.col-4.border.optionsMenu {
+    padding: 0;
+}
