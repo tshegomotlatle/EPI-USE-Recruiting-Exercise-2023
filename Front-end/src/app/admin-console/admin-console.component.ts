@@ -2,7 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user';
+import { UserService } from '../services/user/user.service';
 
+interface registered{
+  registered_users : [
+    User
+  ];
+}
 
 @Component({
   selector: 'app-admin-console',
@@ -14,7 +20,7 @@ export class AdminConsoleComponent implements OnInit {
   selectedUser!: string;
   selectedSystem!: string;
   system!: boolean;
-  dataToStore! : JSON;
+  dataToStore! : registered;
   
   usersCollection! : AngularFirestoreCollection<User>
   users! : Observable<User[]>
@@ -22,7 +28,9 @@ export class AdminConsoleComponent implements OnInit {
 
 
 
-  constructor(public store : AngularFirestore) {}
+  constructor(public store : AngularFirestore,
+    public userService : UserService 
+    ) {}
 
   ngOnInit(): void {
     this.selectedOption = 'system';
@@ -74,6 +82,8 @@ export class AdminConsoleComponent implements OnInit {
     fileReader.readAsText(selectedFile, 'UTF-8');
     fileReader.onload = () => {
       const temp: string = fileReader.result as string;
+      // console.log(temp);
+      
       this.dataToStore = JSON.parse(temp)
     };
     fileReader.onerror = (error) => {
@@ -82,8 +92,8 @@ export class AdminConsoleComponent implements OnInit {
   }
 
   storeFile(): void {
-    console.log(this.dataToStore);
     
+    this.userService.loadAllusers(this.dataToStore.registered_users)
   }
   
   update(): void {

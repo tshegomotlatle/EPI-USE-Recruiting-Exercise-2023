@@ -15,7 +15,8 @@ import { environment } from 'src/environments/environment';
 
 // import { AngularFireModule } from '@angular/fire';
 import {AngularFireModule} from '@angular/fire/compat'
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore/'
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore/';
+import { LoginComponent } from './login/login.component'
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore/'
     HierarchyViewComponent,
     HierarchyTreeComponent,
     AdminConsoleComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
