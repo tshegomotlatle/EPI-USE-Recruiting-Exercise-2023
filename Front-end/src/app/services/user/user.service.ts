@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Employee } from 'src/app/interfaces/employee';
+import { Schedules } from 'src/app/interfaces/schedules';
 import { User } from 'src/app/interfaces/user';
 
 @Injectable({
@@ -20,6 +21,21 @@ export class UserService {
         user.subscribe((response) => {
           if (response.length > 0)
            resolve(response[0] as Employee)
+          else
+            reject(null)
+        });
+      })
+
+  }
+  
+  getScheduleData(id : string)  {
+    
+    const userRef = this.store.collection('schedules', ref => ref.where('id', '==', id));
+      const user = userRef.valueChanges();
+      return new Promise<Schedules>((resolve, reject) =>{
+        user.subscribe((response) => {
+          if (response.length > 0)
+           resolve(response[0] as Schedules)
           else
             reject(null)
         });
@@ -85,5 +101,24 @@ export class UserService {
   logout(){
     localStorage.removeItem("loggedIn");
     localStorage.removeItem("userId");
+  }
+
+  getSubordinates(id : string){
+    const userRef = this.store.collection('employees', ref => ref.where('reports_to', '==', id));
+      const user = userRef.valueChanges();
+      return new Promise<Employee[]>((resolve) =>{
+        user.subscribe((response) => {
+          // console.log(response);
+          
+          if (response.length > 0)
+          {
+            resolve(response as Employee[])
+          }
+          else
+          {
+            resolve([])
+          }
+        });
+      })
   }
 }
