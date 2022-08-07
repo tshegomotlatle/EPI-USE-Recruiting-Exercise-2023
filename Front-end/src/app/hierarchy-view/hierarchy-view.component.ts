@@ -18,6 +18,8 @@ export class HierarchyViewComponent implements OnInit {
   scheduleInfo!: Schedules;
   counter! :number
 
+  employees! : Employee [];
+
   constructor(private userService: UserService, private router: Router) {}
 
   async ngOnInit(): Promise<void> {
@@ -53,32 +55,57 @@ export class HierarchyViewComponent implements OnInit {
       this.user = await this.userService.getUserDataId(this.id);
       this.employeeInfo = await this.userService.getEmployeeData(this.id);
       this.scheduleInfo = await this.userService.getScheduleData(this.id);
-      this.initaliseHierachy(this.user, this.employeeInfo, this.scheduleInfo);
+      this.employees = await this.userService.getAllEmployeeData();
+      // console.log(this.employees);
+      
+      await this.initaliseHierachy(this.user, this.user.username);
+      
     } else {
       this.userService.logout();
       this.router.navigateByUrl('/login');
     }
   }
 
-  async initaliseHierachy(user : User, employeeInfo : Employee, schedule : Schedules) {
-    console.log("parent" + user.username);
-    const parentContainer = document.getElementById("parent" + user.username);
-    console.log(parentContainer);
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    const parent = document.getElementById("parent" + "dwyera")
+    console.log(parent);
     
-    if (parentContainer) {
-      // parentContainer.innerHTML = this.createCardElement(this.user, this.employeeInfo, this.scheduleInfo)
-      if (this.id)
+  }
+  async initaliseHierachy(user : User, parentId: string) {
+    
+    // this.employees.forEach((employee) =>{
+
+    // })
+    
+    const subordinates = this.employees.filter((employee) =>
+    {
+      return employee.reports_to == user.id
+    })
+    console.log(parentId);
+    const parent = document.getElementById("parent" + parentId)
+    subordinates.forEach(async (employee) =>{
+      
+      const user= await this.userService.getUserDataId(employee.id)
+      // console.log(user);
+      console.log(parent);
+      if (parent)
       {
-        const subordinates = await this.userService.getSubordinates(user.id)
-        subordinates.forEach(async (employee) =>{
-          const user = await this.userService.getUserDataId(employee.id);
-          const schedule = await this.userService.getScheduleData(employee.id);
-          parentContainer.innerHTML += this.createCardElement(user, employee, schedule)
-          this.initaliseHierachy(user, employee, schedule)
-          
-        })
+        console.log("PARENT =="  + parent.id );
+        const schedule = await this.userService.getScheduleData(employee.id);
+        parent.insertAdjacentHTML('beforeend',this.createCardElement(user, employee, schedule))
+        
+        this.initaliseHierachy(user, user.username)
+        // console.log(parent);
+        // parent.innerHTML += this.createCardElement(user, employee, schedule)
       }
-    }
+      else{
+
+      }
+    })
+    
+    
   }
 
   createCardElement(user : User, employeeInfo : Employee, schedule : Schedules) : string{

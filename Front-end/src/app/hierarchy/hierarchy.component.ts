@@ -12,7 +12,7 @@ export class HierarchyComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.viewSelected = false;
+    this.viewSelected = true;
   }
 
 }

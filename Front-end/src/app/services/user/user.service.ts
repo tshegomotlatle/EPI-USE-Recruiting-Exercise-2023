@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { delay } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { Schedules } from 'src/app/interfaces/schedules';
 import { User } from 'src/app/interfaces/user';
@@ -26,6 +27,40 @@ export class UserService {
         });
       })
 
+  }
+  
+  async getAllEmployeeData()  {
+    
+    
+    const userRef = this.store.collection('employees');
+    const user = userRef.valueChanges();
+    return new Promise<Employee[]>((resolve) =>{
+      user.subscribe((response) => {
+        // console.log(response);
+        
+        if (response.length > 1)
+         resolve(response as Employee[])
+        });
+      })
+      
+    
+  }
+  
+  async getAllUsers()  {
+    
+    
+    const userRef = this.store.collection('users');
+    const user = userRef.valueChanges();
+    return new Promise<User[]>((resolve) =>{
+      user.subscribe((response) => {
+        // console.log(response);
+        
+        if (response.length > 1)
+         resolve(response as User[])
+        });
+      })
+      
+    
   }
   
   getScheduleData(id : string)  {
@@ -121,4 +156,8 @@ export class UserService {
         });
       })
   }
+
+  private delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
 }
