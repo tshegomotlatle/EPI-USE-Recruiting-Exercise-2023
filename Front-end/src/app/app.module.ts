@@ -16,7 +16,8 @@ import { environment } from 'src/environments/environment';
 // import { AngularFireModule } from '@angular/fire';
 import {AngularFireModule} from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore/';
-import { LoginComponent } from './login/login.component'
+import { LoginComponent } from './login/login.component';
+import { DateFormatPipe } from './pipes/date-format.pipe'
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { LoginComponent } from './login/login.component'
     HierarchyTreeComponent,
     AdminConsoleComponent,
     LoginComponent,
+    DateFormatPipe,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,7 @@ import { LoginComponent } from './login/login.component'
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule
   ],
-  providers: [],
+  providers: [DateFormatPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

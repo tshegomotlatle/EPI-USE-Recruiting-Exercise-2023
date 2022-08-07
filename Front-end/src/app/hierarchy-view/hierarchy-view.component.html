@@ -2,40 +2,33 @@
 
   <div class="card">
     <div class="card-header">
-      <a class="btn" data-bs-toggle="collapse" data-bs-target="#collapseOne" id="collapseble1" href="#collapseOne">
-        Tshego Motlatle - Seniour Software Developer
+      <a class="btn" data-bs-toggle="collapse" attr.data-target="#{{user.username}}" id="collapseble1" href="#{{user.username}}">
+        {{user.first_name}} {{user.surname}} - {{employeeInfo.title}}
       </a>
     </div>
-    <div id="collapseOne" class="collapse ">
+    <div id="{{user.username}}" class="collapse ">
       <div class="card-body">
         <div class="userInformation d-flex">
-          <div class="material-icons">account_circle</div>
+          <div class="d-flex align-items-center">
+            <div class="material-icons userProfile">account_circle</div>
+          </div>
           <div class="personalInfo">
-            Tshego Motlatle <br>
-            Senior Software Developer <br>
-            9904215693080 <br>
+            {{user.first_name}} {{user.surname}}  <br>
+            {{employeeInfo.title}} <br>
+            {{employeeInfo.id}} <br>
           </div>
           <div class="schedule">
-            2022-06-21 08:00 training<br>
-            2022-06-22 08:00 training<br>
-            2022-06-23 08:00 training<br>
+            <div class="chip w-100 d-flex justify-content-between mt-2" *ngFor="let schedule of scheduleInfo.schedule">
+              <span>{{schedule.start_time | dateFormat}}-{{schedule.end_time | dateFormat}}</span>
+              <span>{{schedule.title}}</span>
+              <span class="material-icons editButton">edit</span>
+            </div>
           </div>
         </div>
-        <div class="children">
+        <div class="children" id="parent{{user.username}}">
 
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- <div class="container mt-3">
-  <h2>Simple Collapsible</h2>
-  <p>Click on the button to toggle between showing and hiding content.</p>
-  <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">Simple collapsible</button>
-  <div id="demo" class="collapse">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-  </div>
-</div> -->
