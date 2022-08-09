@@ -2,10 +2,10 @@
   <div class="tf-tree tf-gap-lg pt-5">
     <ul>
       <li>
-        <span class="tf-nc">{{ user.first_name }} {{ user.surname }}</span>
+        <span class="tf-nc" (click)="goToEmployee(user.id)">{{ user.first_name }} {{ user.surname }}</span>
         <ul
           id="parent{{ user.username }}"
-          (click)="goToEmployee(user.id, $event)"
+          
         >
         </ul>
       </li>
@@ -22,13 +22,31 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">{{selectedUser.username}}</h4>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span >&times;</span>
-        </button>
-      </div>
+          <div class="modal-title display-6">
+            {{selectedUser.first_name}} {{selectedUser.surname}}
+          </div> <br>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span >&times;</span>
+          </button>
+        </div>
+        
       <div class="modal-body">
-        ...
+        <div class="d-flex justify-content-center">
+          <img src="assets/user.jpg" alt="">
+        </div>
+        <div class="subtitle">
+          {{selectedEmployee.title}}
+        </div>
+        <div>
+          {{selectedUser.id}} <br>
+        </div>
+        <div class="mt-4">
+          <div class="chip w-100 d-flex justify-content-between mt-2" *ngFor="let schedule of selectedSchedule.schedule">
+            <span>{{schedule.start_time | dateFormat}}-{{schedule.end_time | dateFormat}}</span>
+            <span>{{schedule.title}}</span>
+            <span class="material-icons editButton">edit</span>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

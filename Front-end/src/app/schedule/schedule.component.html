@@ -64,28 +64,28 @@
       <div class="border-bottom pb-4">
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
-          <input type="text" class="form-control" id="title">
+          <input type="text" class="form-control" id="title" [(ngModel)]="title">
         </div>
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
-          <textarea class="form-control" id="description" rows="3"></textarea>
+          <textarea class="form-control" id="description" rows="3" [(ngModel)]="description"></textarea>
         </div>
         <div class="row mb-3">
           <div class="col">
             <label for="startTime" class="form-label">Start time</label>
-            <input type="time" class="form-control" id="startTime" min="00:00" max="24:00" required>        
+            <input type="time" class="form-control" id="startTime" min="00:00" max="24:00" required [(ngModel)]="start_time">        
           </div>
           <div class="col">
             <label for="endtime" class="form-label">End time</label>
-            <input type="time" class="form-control" id="endtime" min="00:00" max="24:00" required>        
+            <input type="time" class="form-control" id="endtime" min="00:00" max="24:00" required [(ngModel)]="end_time">        
           </div>
         </div>
-        <button type="button" class="btn btn-outline-secondary btn-block">Create</button>
+        <button type="button" class="btn btn-outline-secondary btn-block" (click)="createAppointment()">Create</button>
       </div>
-      <div class="appointments mt-4">
-          <div class="chip w-100 d-flex justify-content-between">
-            <span>08:00-09:00</span>
-            <span>Meeting</span>
+      <div class="appointments mt-4" *ngFor="let schedule of schedule.schedule">
+          <div class="chip w-100 d-flex justify-content-between"  *ngIf="schedule.start_time.slice(0, schedule.start_time.indexOf(' ')) == formatedDate">
+            <span>{{schedule.start_time | dateFormat}}-{{schedule.start_time | dateFormat}} </span>
+            <span>{{schedule.title}}</span>
             <span class="material-icons">edit</span>
             <!-- <span class="closebtn ">&times;</span> -->
         </div>

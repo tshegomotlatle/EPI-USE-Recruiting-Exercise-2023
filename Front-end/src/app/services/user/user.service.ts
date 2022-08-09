@@ -157,7 +157,11 @@ export class UserService {
       })
   }
 
-  private delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-}
+
+  public makeAppointment(schedule : Schedules)
+  {
+    console.log(schedule);
+    
+  }
+
 }

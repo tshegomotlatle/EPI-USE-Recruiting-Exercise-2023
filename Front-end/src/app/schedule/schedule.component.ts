@@ -1,4 +1,8 @@
+import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Schedules } from '../interfaces/schedules';
+import { User } from '../interfaces/user';
+import { UserService } from '../services/user/user.service';
 declare var bootstrap: any;
 
 @Component({
@@ -39,15 +43,37 @@ export class ScheduleComponent implements OnInit {
   currentDate!: Date;
   selectedDate! : Date;
   currentDay!: string;
-  constructor() {}
 
-  ngOnInit(): void {
+  title! : string;
+  description!: string;
+  start_time! : Time;
+  end_time! : Time;
+
+  schedule! : Schedules;
+  user!: User;
+  formatedDate!: String;
+
+  constructor(
+    private userService : UserService,
+  ) {}
+
+  async ngOnInit(): Promise<void> {
     const date = new Date();
     this.initaliseCalendar(
       date.getFullYear(),
       date.getMonth(),1
     );
+    // this.user 
+    this.schedule = {} as Schedules
     // this.setCalendarStyling();
+    const id = localStorage.getItem("userId");
+    if (id)
+    {
+      this.user = await this.userService.getUserDataId(id);
+      this.schedule = await this.userService.getScheduleData(id);
+      console.log(this.schedule);
+      
+    }
   }
 
   initaliseCalendar(
@@ -81,8 +107,8 @@ export class ScheduleComponent implements OnInit {
 
 
     const now = new Date();
-    console.log(now.getDate());
-    console.log(this.currentDate);
+    // console.log(now.getDate());
+    // console.log(this.currentDate);
     
 
     if (firstDayOfMonth.getDay() == 6) {
@@ -161,10 +187,37 @@ export class ScheduleComponent implements OnInit {
   openCreateAppointment(day : string)
   {
     this.selectedDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), parseInt(day))
-    console.log(this.selectedDate);
+    const offset = this.selectedDate.getTimezoneOffset()
+    const tempDate = new Date(this.selectedDate.getTime() - (offset*60*1000))
+    this.formatedDate = tempDate.toISOString().split('T')[0]
+    
+    console.log();
+    console.log(this.formatedDate)
+    console.log( this.schedule.schedule[0].start_time.slice(0, this.schedule.schedule[0].start_time.indexOf(" ")) == this.formatedDate);
+    
     const myOffcanvas = document.getElementById('appointmentDetails')
     const bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas)
     bsOffcanvas.show();
     
+  }
+
+  createAppointment(){
+    console.log(this.start_time);
+    
+    const id = localStorage.getItem("userId");
+    if (id)
+    {
+      this.schedule = {
+        id: id,
+        schedule: [{
+          start_time: this.start_time.toString(),
+          end_time: this.end_time.toString(),
+          description: this.description,
+          title: this.title
+        }]
+      }
+      this.userService.makeAppointment(this.schedule)
+    }
+
   }
 }
