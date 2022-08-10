@@ -18,13 +18,13 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.username = "knopel";
+    this.password = "jjsndiner";
     // this.username = "admin";
     // this.password = "admin@123";
-    this.username = "knopel";
-    this.password = "jjsdiner";
   }
 
-  login(){
+  login() : void {
     console.log();
     this.userService.login(this.username,this.password).then(
       (logged) =>
@@ -41,5 +41,7 @@ export class LoginComponent implements OnInit {
     )
     
   }
+
+
 
 }

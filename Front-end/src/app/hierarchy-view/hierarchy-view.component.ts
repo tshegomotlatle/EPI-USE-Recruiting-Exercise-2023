@@ -73,6 +73,7 @@ export class HierarchyViewComponent implements OnInit {
     console.log(parent);
     
   }
+  
   async initaliseHierachy(user : User, parentId: string) {
     
     // this.employees.forEach((employee) =>{

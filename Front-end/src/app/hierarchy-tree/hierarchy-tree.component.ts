@@ -162,16 +162,16 @@ export class HierarchyTreeComponent implements OnInit {
     }
   }
 
-  assignClick(){
-    this.cdRef.detectChanges();
-    console.log(document.querySelector(".tf-nc"));
+  // assignClick(){
+  //   this.cdRef.detectChanges();
+  //   console.log(document.querySelector(".tf-nc"));
     
-    const boxes = document.querySelector(".tf-nc")?.addEventListener(
-      "click",() =>{
-        this.goToEmployee("1")
-      }
-    )
-    console.log(boxes);
+  //   const boxes = document.querySelector(".tf-nc")?.addEventListener(
+  //     "click",() =>{
+  //       this.goToEmployee("1")
+  //     }
+  //   )
+  //   console.log(boxes);
     
-  }
+  // }
 }

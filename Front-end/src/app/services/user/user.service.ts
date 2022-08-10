@@ -5,6 +5,13 @@ import { Employee } from 'src/app/interfaces/employee';
 import { Schedules } from 'src/app/interfaces/schedules';
 import { User } from 'src/app/interfaces/user';
 
+// interface scheduleInterface{
+//   start_time : string,
+//   end_time : string,
+//   description : string,
+//   title : string,
+// }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -158,10 +165,32 @@ export class UserService {
   }
 
 
-  public makeAppointment(schedule : Schedules)
+  public makeAppointment(id: string, schedule : Schedules) : void
   {
-    console.log(schedule);
-    
-  }
+    // console.log(schedule);
+     
+    let scheduleRef = this.store.collection('schedules', ref => ref.where('id', '==', id));
+      const schedules = scheduleRef.valueChanges({idField: "database_id"});
+      schedules.subscribe((response) => {
+        scheduleRef = this.store.collection("schedules");
+        scheduleRef.doc(response[0].database_id).update({schedule: schedule.schedule})
+        // console.log(response);
+        return;
+      });
+}
 
+public editAppointment(schedule : Schedules){
+  console.log(schedule);
+  this.makeAppointment(schedule.id, schedule)
+
+  // let scheduleRef = this.store.collection('schedules', ref => ref.where('id', '==', id));
+  //     const schedules = scheduleRef.valueChanges({idField: "database_id"});
+  //     schedules.subscribe((response) => {
+  //       scheduleRef = this.store.collection("schedules");
+  //       scheduleRef.doc(response[0].database_id).update({schedule: schedule.schedule})
+  //       // console.log(response);
+  //       return;
+  //     });
+
+}
 }

@@ -27,6 +27,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color : var(--bg-secondary)
     // font-size: 3rem;
 }
 
@@ -119,4 +120,12 @@ span.material-icons {
 
 #appointmentDetails{
     color: black;
+}
+
+.editing{
+    background-color: var(--bg-secondary);
+}
+
+.deleteButton{
+    color: red;
 }
