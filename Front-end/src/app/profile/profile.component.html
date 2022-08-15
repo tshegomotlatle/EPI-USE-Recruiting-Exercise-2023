@@ -1,1 +1,41 @@
-<p>profile works!</p>
+<div class="profileContainer">
+    <div class="formContainer">
+        <div class="container">
+            <img src="{{user.avatar}}" alt="avatar" class="image" onerror="this.src='assets/user.jpg'">
+            <div class="middle">
+              <div class="text" (click)="fileUploadTrigger()">Upload</div>
+            </div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="firstName" class="form-label">First Name:</label>
+            <input type="text" class="form-control" id="firstName" placeholder="Enter first name" name="firstName" [(ngModel)]="user.first_name">
+        </div>        
+        <div class="mb-3 mt-3">
+            <label for="surname" class="form-label">Surname:</label>
+            <input type="text" class="form-control" id="surname" placeholder="Enter surname" name="surname" [(ngModel)]="user.surname">
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="username" class="form-label">Username:</label>
+            <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" [(ngModel)]="user.username">
+        </div>
+        <div class="mb-3 mt-3" *ngIf="changePassword">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" [(ngModel)]="password">
+        </div>
+        
+        <div class="mb-3 mt-3" *ngIf="changePassword">
+            <label for="confirmpassword" class="form-label">Confirm Password:</label>
+            <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm password" name="confirmpassword" [(ngModel)]="confirmPassword">
+        </div>
+        <div class="passwordLink" (click)="togglePasswordInputs()">
+            <span *ngIf="!changePassword">Change Password?</span>
+            <span *ngIf="changePassword">Cancel Password change?</span>
+        </div>
+        <div class="fileInput " (change)="fileUpload($event)">
+            <input type="file" id="fileUpload" accept=".jpg, .jpeg, .png .webp">
+        </div>
+        <div class="buttonContainer d-flex justify-content-center mt-5">
+            <button class="btn btn-outline-secondary btn-block" (click)="update()">Update</button>
+        </div>
+    </div>
+</div>

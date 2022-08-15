@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { delay } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { delay, finalize } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { Schedules } from 'src/app/interfaces/schedules';
 import { User } from 'src/app/interfaces/user';
@@ -17,7 +18,7 @@ import { User } from 'src/app/interfaces/user';
 })
 export class UserService {
 
-  constructor(private store : AngularFirestore){
+  constructor(private store : AngularFirestore, private storage : AngularFireStorage){
 
   }
   
@@ -192,5 +193,46 @@ public editAppointment(schedule : Schedules){
   //       return;
   //     });
 
+}
+
+public updateUser(user : User) : void {
+
+  let userRef = this.store.collection('users', ref => ref.where('id', '==', user.id));
+      const users = userRef.valueChanges({idField: "database_id"});
+      users.subscribe((response) => {
+        // console.log(response);
+        userRef = this.store.collection("users");
+        userRef.doc(response[0].database_id).update({first_name : user.first_name, surname : user.surname, username : user.username })
+        return;
+      });
+}
+
+public uploadPhoto(file : File, userID : string) : Promise<boolean> {
+  return new Promise<boolean>((resolve, reject) =>{
+    const filePath = file.name;
+    const storageRef = this.storage.ref(filePath);
+    const uploadTask = this.storage.upload(filePath, file);
+    uploadTask.snapshotChanges().pipe(
+      finalize(() =>{
+          storageRef.getDownloadURL().subscribe(async downloadURL => {
+          await this.saveFileData(downloadURL, userID);
+          resolve(true)
+        });
+      })
+    ).subscribe()
+
+  })
+}
+
+private saveFileData(url : string, id : string){
+  let userRef = this.store.collection('users', ref => ref.where('id', '==', id));
+      const users = userRef.valueChanges({idField: "database_id"});
+      users.subscribe((response) => {
+        // console.log(response);
+        userRef = this.store.collection("users");
+        userRef.doc(response[0].database_id).update({ avatar : url })
+        return;
+      });
+  
 }
 }

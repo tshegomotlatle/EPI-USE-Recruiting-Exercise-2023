@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { User } from '../interfaces/user';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +9,64 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  @Input() user! : User;
+  @Input() password! : string;
+  @Input() confirmPassword! : string;
+  changePassword! : boolean;
+  image! : string | ArrayBuffer | null;
+  file!: File;
 
-  ngOnInit(): void {
+  constructor(
+    private userService: UserService
+  ) { }
+
+  async ngOnInit(): Promise<void> {
+    this.image = "";
+    this.user = {} as User;
+    this.changePassword = false;
+    const session = this.userService.getSessionData();
+    if (session.userId)
+    {
+      this.user = await this.userService.getUserDataId(session.userId);
+      console.log(this.user);
+      
+    }
   }
 
+  togglePasswordInputs() : void
+  {
+    if (this.changePassword)
+     this.changePassword = false;
+    else
+    {
+      this.changePassword = true;
+    }
+  }
+
+  update() : void{
+    // this.userService.updateUser(this.user);
+    this.userService.uploadPhoto(this.file, this.user.id).then(
+      ()=>{
+        alert("Successfully editted profile")
+      }
+    );
+  }
+
+  fileUpload(event : any)
+  {
+    if (event.target.files && event.target.files[0]) {
+      this.file = event.target.files[0];
+
+      const reader = new FileReader();
+      reader.onload = e => {this.user.avatar = reader.result as string};
+
+      reader.readAsDataURL(this.file);
+  }
+    
+    
+  }
+
+  fileUploadTrigger(){
+    document.getElementById("fileUpload")?.click()
+  }
 }

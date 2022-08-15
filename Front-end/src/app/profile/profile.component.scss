@@ -1,0 +1,83 @@
+.profileContainer{
+    margin-left: 5rem;
+    display: grid;
+    justify-content: center;
+}
+
+.formContainer{
+    margin-top: 10vh;
+    padding:0 10vh ;
+    width: 50vw;
+    border-right: 2px solid var(--bg-secondary) ;
+    border-left: 2px solid var(--bg-secondary) ;
+}
+
+button.btn.btn-outline-secondary.btn-block {
+    width: 50%;
+    
+}
+
+button.btn.btn-outline-secondary.btn-block:hover {
+    background-color: var(--bg-secondary);
+}
+
+.passwordLink:hover{
+    cursor: pointer;
+    color: blue;
+}
+
+.material-icons{
+    // font-size: 50px;
+}
+
+img {
+    width: auto;
+    height: auto;
+}
+
+.imageContainer{
+//  height: 0vh;
+height: 300px;
+}
+
+.container {
+    position: relative;
+    width: 50%;
+  }
+  
+  .image {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+  }
+  
+  .middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .container:hover .image {
+    opacity: 0.3;
+    border: 1px solid black;
+  }
+  
+  .container:hover .middle {
+    opacity: 1;
+  }
+  
+  .text {
+    background-color: var(--bg-primary);
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+    border-radius: 10px;
+  }

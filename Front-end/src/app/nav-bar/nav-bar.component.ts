@@ -21,19 +21,9 @@ export class NavBarComponent implements OnInit {
     ) { }
 
   async ngOnInit(): Promise<void> {
-    this.user = {
-      id : "",
-      username : "",
-      first_name : "",
-      password : "",
-      surname : ""
-    }
+    this.user = {} as User
 
-    this.employeeInfo ={
-      id : "",
-      title : "",
-      reports_to : ""
-    }
+    this.employeeInfo ={} as Employee
 
     this.id = this.userService.getSessionData().userId;
     if (this.id !== null)

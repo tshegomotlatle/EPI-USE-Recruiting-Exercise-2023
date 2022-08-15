@@ -24,31 +24,11 @@ export class HierarchyViewComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.counter = 0;
-    this.user = {
-      id: '',
-      username: '',
-      first_name: '',
-      password: '',
-      surname: '',
-    };
+    this.user = {} as User
 
-    this.employeeInfo = {
-      id: '',
-      title: '',
-      reports_to: '',
-    };
+    this.employeeInfo = {} as Employee
 
-    this.scheduleInfo = {
-      id: '',
-      schedule: [
-        {
-          start_time: '',
-          end_time: '',
-          title: '',
-          description: '',
-        },
-      ],
-    };
+    this.scheduleInfo = {} as Schedules
 
     this.id = this.userService.getSessionData().userId;
     if (this.id !== null) {
