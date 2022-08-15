@@ -3,7 +3,7 @@
     height: 100%;
     margin-left: 5rem;
     padding: 10px;      
-    color: white;
+    color: black;
 }
 
 .daysOfTheWeek{
@@ -23,32 +23,34 @@
 .MonthHeadings{ 
     // border: 1px solid black;
     height: 65%;
-    text-align: center;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     color : var(--bg-secondary)
     // font-size: 3rem;
 }
 
 .currentMonth{
+    flex: 40%;
+    align-items: flex-start;
+}
+
+.userSchedule{
+    flex: 30%;
 }
 
 .prevIcon{
-    padding-left: 20px;
-}
-
-.calendarIcon:hover{
-    cursor: pointer;
+    flex: 15%;
+    // justify-content: flex-end;
 }
 
 .nextIcon{
-    padding-right: 20px;
+    flex: 15%;
 }
 
 .weekHeadings{
     height: 35%;
     background-color: var(--bg-secondary);
+    color: white;
 }
 
 .daysOfMonth{
@@ -62,7 +64,7 @@
     width: calc(100% / 7);
     border: 1px solid;
     border-color: var(--bg-secondary);
-    background: var(--bg-quadinary);
+    // background: var(--bg-quadinary);
 }
 
 .prevMonth{
@@ -89,13 +91,21 @@
 
 button.btn.btn-outline-secondary.btn-block {
     width: 100%;
+    
+}
+
+button.btn.btn-outline-secondary.btn-block:hover {
+    width: 100%;
+    background-color: var(--bg-secondary);
 }
 
 .currentDay{
     color: black;
-    border: 1px solid red;
+    // border: 1px solid red;
     padding: 0 4px;
-    border-radius: 10px;
+    border-radius: 25px;
+    color: white;
+    background-color: var(--bg-primary);
 }
 
 .chip {
@@ -107,15 +117,21 @@ button.btn.btn-outline-secondary.btn-block {
     border-radius: 25px;
     background-color: #f1f1f1;
   }
+
+.miniChip {
+    margin: 1px 7px;
+    border-radius: 25px;
+    background-color: #f1f1f1;
+  }
   
 span.material-icons {
     display: flex;
     align-items: center;
-    font-size: 20px;
+    font-size: 50px;
 }
 
 .dayContainer{
-    margin-left: 4px;
+    padding: 5px;
 }
 
 #appointmentDetails{
@@ -124,8 +140,39 @@ span.material-icons {
 
 .editing{
     background-color: var(--bg-secondary);
+    color: white;
 }
 
 .deleteButton{
     color: red;
+}
+
+.backArrow{
+    justify-content: end;
+}
+
+span.material-icons.editButton {
+    font-size: larger;
+}
+
+span.material-icons.editButton:hover {
+    color: var(--bg-quadinary);
+    cursor: pointer;
+}
+
+.arrows:hover{
+    color: var(--bg-quadinary);
+    cursor: pointer;
+}
+
+.monthDayContainer {
+    padding: 5px;
+}
+
+.notVisible {
+    visibility: hidden;
+}
+
+span.flex-fill.ml-2 {
+    margin-left: 1rem;
 }

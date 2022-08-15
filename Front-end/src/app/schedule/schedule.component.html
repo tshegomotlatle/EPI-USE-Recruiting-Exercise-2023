@@ -1,22 +1,41 @@
 <div class="calendarContainer">
   <div class="headings">
     <div class="MonthHeadings">
-      <div
-        class="prevIcon calendarIcon "
-        (click)="changeCalenderMonthPrevious()"
-      >
-        <span class="material-icons">arrow_back_ios</span>
-      </div>
       <div class="currentMonth">
         <div class="h2">{{ month }}</div>
         <div class="h4">{{ year }}</div>
       </div>
-      <div class="nextIcon calendarIcon" (click)="changeCalenderMonthNext()">
-        <span class="material-icons">arrow_forward_ios</span>
+      <div class="userSchedule">
+        <select
+          class="form-select"
+          (change)="changeUser()"
+          [(ngModel)]="selectedUser"
+        >
+          <option
+            *ngFor="let employee of employees"
+            value="{{ employee.userInfo.id }}"
+          >
+            {{ employee.userInfo.first_name }} {{ employee.userInfo.surname }}
+          </option>
+        </select>
+      </div>
+      <div class="prevIcon calendarIcon">
+        <span
+          class="material-icons backArrow arrows"
+          (click)="changeCalenderMonthPrevious()"
+          >arrow_back_ios</span
+        >
+      </div>
+      <div class="nextIcon calendarIcon">
+        <span
+          class="material-icons frontArrow arrows"
+          (click)="changeCalenderMonthNext()"
+          >arrow_forward_ios</span
+        >
       </div>
     </div>
     <div class="weekHeadings">
-      <div class="daysOfTheWeek ">Sunday</div>
+      <div class="daysOfTheWeek">Sunday</div>
       <div class="daysOfTheWeek">Monday</div>
       <div class="daysOfTheWeek">Tuesday</div>
       <div class="daysOfTheWeek">Wednesday</div>
@@ -29,30 +48,52 @@
     <div
       class="monthDays prevMonth {{ styleClass }}"
       *ngFor="let day of previousMonthDays; index as i"
-      (click)="changeCalenderMonthPrevious()">
-      <span class="dayContainer">{{ day }}</span>
+      (click)="changeCalenderMonthPrevious()"
+    >
+      <div class="monthDayContainer">
+        <span class="dayContainer">{{ day }}</span>
+      </div>
+      <div class="d-flex flex-column notVisible">
+        <span class="miniChip before ">1</span>
+      </div>
     </div>
+
     <div
       class="monthDays {{ styleClass }}"
       *ngFor="let day of currentMonthDays; index as i"
       (click)="openCreateAppointment(day.date)"
     >
-      <span class="{{ day.class }} dayContainer">{{ day.date }}</span>
+      <div class="monthDayContainer">
+        <span class="{{ day.class }} dayContainer ">{{ day.date }}</span>
+      </div>
+      <div class="d-flex flex-column " id="day{{day.date}}">
+        <span class="miniChip d-flex notVisible" >
+          <span class="flex-fill ml-2">01:00 - 08:30</span>
+          <span class="flex-fill">Meeting</span>
+        </span>
+      </div>
     </div>
+
     <div
       class="monthDays nextMonth {{ styleClass }}"
       *ngFor="let day of nextMonthDays; index as i"
-      (click)="changeCalenderMonthNext()">
-      <span class="dayContainer">{{ day }}</span>
+      (click)="changeCalenderMonthNext()"
+    >
+      <div class="monthDayContainer">
+        <span class="dayContainer">{{ day }}</span>
+      </div>
+      <div class="d-flex flex-column">
+        <span class="miniChip before notVisible">1</span>
+      </div>
     </div>
   </div>
 
   <div class="offcanvas offcanvas-end" id="appointmentDetails">
     <div class="offcanvas-header">
       <h1 class="offcanvas-title">
-        {{selectedDate.getDate()}}
-        {{months[selectedDate.getMonth()]}}
-        {{selectedDate.getFullYear()}}
+        {{ selectedDate.getDate() }}
+        {{ months[selectedDate.getMonth()] }}
+        {{ selectedDate.getFullYear() }}
       </h1>
       <button
         type="button"
@@ -64,40 +105,106 @@
       <div class="border-bottom pb-4">
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
-          <input type="text" class="form-control" id="title" [(ngModel)]="title">
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            [(ngModel)]="title"
+          />
         </div>
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
-          <textarea class="form-control" id="description" rows="3" [(ngModel)]="description"></textarea>
+          <textarea
+            class="form-control"
+            id="description"
+            rows="3"
+            [(ngModel)]="description"
+          ></textarea>
         </div>
         <div class="row mb-3">
           <div class="col">
             <label for="startTime" class="form-label">Start time</label>
-            <input type="time" class="form-control" id="startTime" min="00:00" max="24:00" required [(ngModel)]="start_time">        
+            <input
+              type="time"
+              class="form-control"
+              id="startTime"
+              min="00:00"
+              max="24:00"
+              required
+              [(ngModel)]="start_time"
+            />
           </div>
           <div class="col">
             <label for="endtime" class="form-label">End time</label>
-            <input type="time" class="form-control" id="endtime" min="00:00" max="24:00" required [(ngModel)]="end_time">        
+            <input
+              type="time"
+              class="form-control"
+              id="endtime"
+              min="00:00"
+              max="24:00"
+              required
+              [(ngModel)]="end_time"
+            />
           </div>
         </div>
         <div *ngIf="currentAction == 'create'">
-          <button type="button" class="btn btn-outline-secondary btn-block" (click)="createAppointment()">Create</button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-block"
+            (click)="createAppointment()"
+          >
+            Create
+          </button>
         </div>
         <div *ngIf="currentAction == 'edit'" class="row">
           <div class="col mr-1">
-            <button type="button" class="btn btn-outline-secondary btn-block" (click)="updateAppointment()">Update</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-block"
+              (click)="updateAppointment()"
+            >
+              Update
+            </button>
           </div>
           <div class="col">
-            <button type="button" class="btn btn-outline-secondary btn-block deleteButton" (click)="deleteAppointment()">Delete</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-block deleteButton"
+              (click)="deleteAppointment()"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
       <div class="appointments mt-4" *ngFor="let schedule of schedule.schedule">
-          <div class="chip w-100 d-flex justify-content-between"  *ngIf="schedule.start_time.slice(0, schedule.start_time.indexOf(' ')) == formatedDate">
-            <span>{{schedule.start_time | dateFormat}}-{{schedule.end_time | dateFormat}} </span>
-            <span>{{schedule.title}}</span>
-            <span class="material-icons" (click)="editAppointment(schedule.start_time, schedule.end_time, schedule.title, schedule.description, $event.target)">edit</span>
-            <!-- <span class="closebtn ">&times;</span> -->
+        <div
+          class="chip w-100 d-flex justify-content-between"
+          *ngIf="
+            schedule.start_time.slice(0, schedule.start_time.indexOf(' ')) ==
+            formatedDate
+          "
+        >
+          <span
+            >{{ schedule.start_time | dateFormat }}-{{
+              schedule.end_time | dateFormat
+            }}
+          </span>
+          <span>{{ schedule.title }}</span>
+          <span
+            class="material-icons editButton"
+            (click)="
+              editAppointment(
+                schedule.start_time,
+                schedule.end_time,
+                schedule.title,
+                schedule.description,
+                $event.target
+              )
+            "
+            >edit</span
+          >
+          <!-- <span class="closebtn ">&times;</span> -->
         </div>
       </div>
     </div>

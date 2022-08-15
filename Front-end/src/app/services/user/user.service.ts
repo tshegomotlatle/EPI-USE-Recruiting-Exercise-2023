@@ -165,11 +165,11 @@ export class UserService {
   }
 
 
-  public makeAppointment(id: string, schedule : Schedules) : void
+  public makeAppointment(schedule : Schedules) : void
   {
-    // console.log(schedule);
+    // console.log(id, schedule);
      
-    let scheduleRef = this.store.collection('schedules', ref => ref.where('id', '==', id));
+    let scheduleRef = this.store.collection('schedules', ref => ref.where('id', '==', schedule.id));
       const schedules = scheduleRef.valueChanges({idField: "database_id"});
       schedules.subscribe((response) => {
         scheduleRef = this.store.collection("schedules");
@@ -181,7 +181,7 @@ export class UserService {
 
 public editAppointment(schedule : Schedules){
   console.log(schedule);
-  this.makeAppointment(schedule.id, schedule)
+  this.makeAppointment(schedule)
 
   // let scheduleRef = this.store.collection('schedules', ref => ref.where('id', '==', id));
   //     const schedules = scheduleRef.valueChanges({idField: "database_id"});
