@@ -17,8 +17,9 @@ import { environment } from 'src/environments/environment';
 import {AngularFireModule} from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore/';
 import { LoginComponent } from './login/login.component';
-import { DateFormatPipe } from './pipes/date-format.pipe';
-import { ProfileComponent } from './profile/profile.component'
+import {DateFormatPipe } from './pipes/DateFormat/date-format.pipe'
+import { ProfileComponent } from './profile/profile.component';
+import { DateFormatLongPipe } from './pipes/DateFormatLong/date-format-long.pipe'
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ProfileComponent } from './profile/profile.component'
     LoginComponent,
     DateFormatPipe,
     ProfileComponent,
+    DateFormatLongPipe,
   ],
   imports: [
     BrowserModule,

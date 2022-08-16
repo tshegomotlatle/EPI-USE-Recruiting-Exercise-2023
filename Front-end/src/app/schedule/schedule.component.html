@@ -103,79 +103,87 @@
     </div>
     <div class="offcanvas-body">
       <div class="border-bottom pb-4">
-        <div class="mb-3">
-          <label for="title" class="form-label">Title</label>
-          <input
-            type="text"
-            class="form-control"
-            id="title"
-            [(ngModel)]="title"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="description" class="form-label">Description</label>
-          <textarea
-            class="form-control"
-            id="description"
-            rows="3"
-            [(ngModel)]="description"
-          ></textarea>
-        </div>
-        <div class="row mb-3">
-          <div class="col">
-            <label for="startTime" class="form-label">Start time</label>
+        <form class="was-validated">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
             <input
-              type="time"
+              type="text"
               class="form-control"
-              id="startTime"
-              min="00:00"
-              max="24:00"
+              id="title"
+              [(ngModel)]="title"
+              name="title"
               required
-              [(ngModel)]="start_time"
             />
           </div>
-          <div class="col">
-            <label for="endtime" class="form-label">End time</label>
-            <input
-              type="time"
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea
               class="form-control"
-              id="endtime"
-              min="00:00"
-              max="24:00"
+              id="description"
+              rows="3"
+              [(ngModel)]="description"
+              name="description"
               required
-              [(ngModel)]="end_time"
-            />
+            ></textarea>
           </div>
-        </div>
-        <div *ngIf="currentAction == 'create'">
-          <button
-            type="button"
-            class="btn btn-outline-secondary btn-block"
-            (click)="createAppointment()"
-          >
-            Create
-          </button>
-        </div>
-        <div *ngIf="currentAction == 'edit'" class="row">
-          <div class="col mr-1">
+          <div class="row mb-3">
+            <div class="col">
+              <label for="startTime" class="form-label">Start time</label>
+              <input
+                name="start_time"
+                type="time"
+                class="form-control"
+                id="startTime"
+                min="00:00"
+                max="24:00"
+                required
+                [(ngModel)]="start_time"
+              />
+            </div>
+            <div class="col">
+              <label for="endtime" class="form-label">End time</label>
+              <input
+                name="end_time"
+                type="time"
+                class="form-control"
+                id="endtime"
+                min="00:00"
+                max="24:00"
+                required
+                [(ngModel)]="end_time"
+              />
+            </div>
+          </div>
+          <div *ngIf="currentAction == 'create'">
             <button
               type="button"
               class="btn btn-outline-secondary btn-block"
-              (click)="updateAppointment()"
+              (click)="createAppointment()"
             >
-              Update
+              Create
             </button>
           </div>
-          <div class="col">
-            <button
-              type="button"
-              class="btn btn-outline-secondary btn-block deleteButton"
-              (click)="deleteAppointment()"
-            >
-              Delete
-            </button>
+          <div *ngIf="currentAction == 'edit'" class="row">
+            <div class="col mr-1">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-block"
+                (click)="updateAppointment()"
+              >
+                Update
+              </button>
+            </div>
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-block deleteButton"
+                (click)="deleteAppointment()"
+              >
+                Delete
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
       <div class="appointments mt-4" *ngFor="let schedule of schedule.schedule">
         <div

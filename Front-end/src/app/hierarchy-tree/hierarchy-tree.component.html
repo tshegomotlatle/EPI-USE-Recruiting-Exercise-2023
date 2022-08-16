@@ -32,7 +32,7 @@
         
       <div class="modal-body">
         <div class="d-flex justify-content-center">
-          <img src="assets/user.jpg" alt="">
+          <img src="{{selectedUser.avatar}}" alt="avatar" onerror="this.src='assets/user.jpg'">
         </div>
         <div class="subtitle">
           {{selectedEmployee.title}}
@@ -48,10 +48,10 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer">
+      <!-- <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

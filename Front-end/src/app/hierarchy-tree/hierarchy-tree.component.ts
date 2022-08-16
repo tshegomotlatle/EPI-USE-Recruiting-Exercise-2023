@@ -4,6 +4,7 @@ import { Employee } from '../interfaces/employee';
 import { Schedules } from '../interfaces/schedules';
 import { User } from '../interfaces/user';
 import { UserService } from '../services/user/user.service';
+import {DateFormatPipe } from '../pipes/DateFormat/date-format.pipe'
 
 declare var bootstrap: any;
 

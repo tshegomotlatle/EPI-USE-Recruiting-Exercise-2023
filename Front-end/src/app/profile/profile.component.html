@@ -31,7 +31,7 @@
             <span *ngIf="!changePassword">Change Password?</span>
             <span *ngIf="changePassword">Cancel Password change?</span>
         </div>
-        <div class="fileInput " (change)="fileUpload($event)">
+        <div class="fileInput d-none" (change)="fileUpload($event)">
             <input type="file" id="fileUpload" accept=".jpg, .jpeg, .png .webp">
         </div>
         <div class="buttonContainer d-flex justify-content-center mt-5">

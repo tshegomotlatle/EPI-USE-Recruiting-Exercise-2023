@@ -50,7 +50,7 @@ export class HierarchyViewComponent implements OnInit {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     const parent = document.getElementById("parent" + "dwyera")
-    console.log(parent);
+    // console.log(parent);
     
   }
   
@@ -64,16 +64,16 @@ export class HierarchyViewComponent implements OnInit {
     {
       return employee.reports_to == user.id
     })
-    console.log(parentId);
+    // console.log(parentId);
     const parent = document.getElementById("parent" + parentId)
     subordinates.forEach(async (employee) =>{
       
       const user= await this.userService.getUserDataId(employee.id)
       // console.log(user);
-      console.log(parent);
+      // console.log(parent);
       if (parent)
       {
-        console.log("PARENT =="  + parent.id );
+        // console.log("PARENT =="  + parent.id );
         const schedule = await this.userService.getScheduleData(employee.id);
         parent.insertAdjacentHTML('beforeend',this.createCardElement(user, employee, schedule))
         
@@ -116,7 +116,7 @@ export class HierarchyViewComponent implements OnInit {
           <div class="card-body">
             <div class="userInformation d-flex">
               <div class="d-flex align-items-center">
-                <div class="material-icons userProfile">account_circle</div>
+                  <img src="${user.avatar}" alt="" onerror="this.src='assets/user.jpg'">
               </div>
               <div class="personalInfo">
                 ${user.first_name} ${user.surname}  <br>

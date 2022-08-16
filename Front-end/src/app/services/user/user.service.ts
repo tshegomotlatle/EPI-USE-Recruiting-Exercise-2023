@@ -195,16 +195,19 @@ public editAppointment(schedule : Schedules){
 
 }
 
-public updateUser(user : User) : void {
+public updateUser(user : User) : Promise<boolean> {
+  return new Promise<boolean>((resolve, reject) =>{
+    let userRef = this.store.collection('users', ref => ref.where('id', '==', user.id));
+        const users = userRef.valueChanges({idField: "database_id"});
+        users.subscribe((response) => {
+          // console.log(response);
+          userRef = this.store.collection("users");
+          userRef.doc(response[0].database_id).update({first_name : user.first_name, surname : user.surname, username : user.username, password : user.password   })
+          resolve(true);
+        });
 
-  let userRef = this.store.collection('users', ref => ref.where('id', '==', user.id));
-      const users = userRef.valueChanges({idField: "database_id"});
-      users.subscribe((response) => {
-        // console.log(response);
-        userRef = this.store.collection("users");
-        userRef.doc(response[0].database_id).update({first_name : user.first_name, surname : user.surname, username : user.username })
-        return;
-      });
+  })
+
 }
 
 public uploadPhoto(file : File, userID : string) : Promise<boolean> {
