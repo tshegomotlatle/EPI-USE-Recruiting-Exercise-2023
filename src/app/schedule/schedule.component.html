@@ -88,7 +88,7 @@
     </div>
   </div>
 
-  <div class="offcanvas offcanvas-end" id="appointmentDetails">
+  <div class="offcanvas offcanvas-end"  id="appointmentDetails">
     <div class="offcanvas-header">
       <h1 class="offcanvas-title">
         {{ selectedDate.getDate() }}
@@ -99,6 +99,7 @@
         type="button"
         class="btn-close text-reset"
         data-bs-dismiss="offcanvas"
+        (click)="closeAppointment()"
       ></button>
     </div>
     <div class="offcanvas-body">

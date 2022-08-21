@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from './services/user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'client';
+  title = 'Scheduler';
+  logged: { loggedIn: string | null; userId: string | null; };
+  constructor(private userService: UserService){
+    this.logged = this.userService.getSessionData();
+    
+  }
+
+  
 }

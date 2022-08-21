@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AES } from 'crypto-js';
 import { UserService } from '../services/user/user.service';
 
 @Component({
@@ -11,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   @Input() username! : string;
   @Input() password! : string;
+  hashValue = "EPI-USE"
 
   constructor(
     private userService : UserService,
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit {
         if (logged)
         {
           this.router.navigateByUrl("/hierarchy")
+          // location.reload();
         }
         else
         {

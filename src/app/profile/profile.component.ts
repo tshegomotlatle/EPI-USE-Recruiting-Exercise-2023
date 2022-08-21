@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AES } from 'crypto-js';
 import { User } from '../interfaces/user';
 import { UserService } from '../services/user/user.service';
 
@@ -13,6 +14,7 @@ export class ProfileComponent implements OnInit {
   @Input() confirmPassword!: string;
   changePassword!: boolean;
   file!: File;
+  hashValue = "EPI-USE"
 
   constructor(private userService: UserService) {}
 
@@ -47,7 +49,7 @@ export class ProfileComponent implements OnInit {
       }
     } else {
       if (this.password === this.confirmPassword) {
-        this.user.password = this.password;
+        ;
         if (this.file !== undefined) {
           this.userService.updateUser(this.user);
           this.userService.uploadPhoto(this.file, this.user.id).then(() => {

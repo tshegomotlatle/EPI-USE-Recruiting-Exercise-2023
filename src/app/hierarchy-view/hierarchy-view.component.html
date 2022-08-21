@@ -9,19 +9,19 @@
     <div id="{{user.username}}" class="collapse ">
       <div class="card-body">
         <div class="userInformation d-flex">
-          <div class="d-flex align-items-center">
+          <div class="d-flex">
             <img src="{{user.avatar}}" alt="" onerror="this.src='assets/user.jpg'">
           </div>
-          <div class="personalInfo">
-            {{user.first_name}} {{user.surname}}  <br>
-            {{employeeInfo.title}} <br>
-            {{employeeInfo.id}} <br>
+          <div class="personalInfo ">
+            <span class="name pt-3">{{user.first_name}} {{user.surname}}</span>  <br>
+            <span class="employeeTitle pt-3">{{employeeInfo.title}}</span> <br>
+            <span class="employeeId pt-3">{{employeeInfo.id}}</span> <br>
           </div>
           <div class="schedule">
-            <div class="chip w-100 d-flex justify-content-between mt-2" *ngFor="let schedule of scheduleInfo.schedule">
-              <span>{{schedule.start_time | dateFormatLong}} {{schedule.start_time | dateFormat}}-{{schedule.end_time | dateFormat}}</span>
-              <span>{{schedule.title}}</span>
-              <span class="material-icons editButton">edit</span>
+            <div class="chip w-100 d-flex mt-2" *ngFor="let schedule of scheduleInfo.schedule">
+              <span class="date">{{schedule.start_time | dateFormatLong}} {{schedule.start_time | dateFormat}} - {{schedule.end_time | dateFormat}}</span>
+              <span class="title">{{schedule.title}}</span>
+              <span class="description " >{{schedule.description}}</span>
             </div>
           </div>
         </div>

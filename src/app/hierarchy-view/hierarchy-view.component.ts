@@ -5,6 +5,13 @@ import { Schedules } from '../interfaces/schedules';
 import { User } from '../interfaces/user';
 import { UserService } from '../services/user/user.service';
 
+interface Appointment {
+  start_time: string;
+  end_time: string;
+  title: string;
+  description: string;
+}
+
 @Component({
   selector: 'app-hierarchy-view',
   templateUrl: './hierarchy-view.component.html',
@@ -20,7 +27,23 @@ export class HierarchyViewComponent implements OnInit {
 
   employees! : Employee [];
 
-  constructor(private userService: UserService, private router: Router) {}
+  months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ]
+
+  constructor(private userService: UserService, 
+    private router: Router) {}
 
   async ngOnInit(): Promise<void> {
     this.counter = 0;
@@ -96,11 +119,15 @@ export class HierarchyViewComponent implements OnInit {
     {
       appointments += `
       <div class="chip w-100 d-flex justify-content-between mt-2">
-        <span>${schedule.schedule[k].start_time.slice(schedule.schedule[k].start_time.indexOf(" "))}-${schedule.schedule[k].end_time.slice(schedule.schedule[k].end_time.indexOf(" "))}</span>
-        <span>${schedule.schedule[k].title}</span>
-        <span class="material-icons editButton">edit</span>
+        <span class="date">${this.tranformDate(schedule.schedule[k].start_time)} ${schedule.schedule[k].start_time.split(" ")[1]} - ${schedule.schedule[k].end_time.slice(schedule.schedule[k].end_time.indexOf(" "))}</span>
+        <span class="title">${schedule.schedule[k].title}</span>
+        <span class="description">${schedule.schedule[k].description}</span>
       </div>
       `;
+
+      // <span class="date">{{schedule.start_time | dateFormatLong}} {{schedule.start_time | dateFormat}}-{{schedule.end_time | dateFormat}}</span>
+      //         <span class="title">{{schedule.title}}</span>
+      //         <span class="description " >{{schedule.description}}</span>
       
     }
     // console.log(appointments);
@@ -119,9 +146,9 @@ export class HierarchyViewComponent implements OnInit {
                   <img src="${user.avatar}" alt="" onerror="this.src='assets/user.jpg'">
               </div>
               <div class="personalInfo">
-                ${user.first_name} ${user.surname}  <br>
-                ${employeeInfo.title} <br>
-                ${employeeInfo.id} <br>
+              <span class="name pt-3">${user.first_name} ${user.surname}</span>  <br>
+            <span class="employeeTitle pt-3">${employeeInfo.title}</span> <br>
+            <span class="employeeId pt-3">${employeeInfo.id}</span> <br>
               </div>
               <div class="schedule">
                 ${appointments}
@@ -135,5 +162,13 @@ export class HierarchyViewComponent implements OnInit {
      </div>
     `
     return element;
+  }
+
+  tranformDate(date: string) : string{
+    date = date.split(" ")[0]
+    const dateArray = date.split("-");
+    console.log(dateArray);
+    
+    return dateArray[2] + " " + this.months[parseInt(dateArray[1])] + " " + dateArray[0];
   }
 }

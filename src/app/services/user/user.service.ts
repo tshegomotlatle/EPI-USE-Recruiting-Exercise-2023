@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AES } from 'crypto-js';
 import { delay, finalize } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { Schedules } from 'src/app/interfaces/schedules';
@@ -17,6 +18,8 @@ import { User } from 'src/app/interfaces/user';
   providedIn: 'root'
 })
 export class UserService {
+
+  hashValue = "EPI-USE"
 
   constructor(private store : AngularFirestore, private storage : AngularFireStorage){
 
@@ -87,6 +90,7 @@ export class UserService {
   }
 
   async login(username : string, password : string){
+    password = AES.encrypt(password, this.hashValue).toString();
 
     return this.getUserDataUsername(username)
     .then(
@@ -196,6 +200,7 @@ public editAppointment(schedule : Schedules){
 }
 
 public updateUser(user : User) : Promise<boolean> {
+  user.password = AES.encrypt(user.password, this.hashValue).toString();
   return new Promise<boolean>((resolve, reject) =>{
     let userRef = this.store.collection('users', ref => ref.where('id', '==', user.id));
         const users = userRef.valueChanges({idField: "database_id"});

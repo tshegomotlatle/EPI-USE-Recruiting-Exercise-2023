@@ -88,11 +88,6 @@ export class ScheduleComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     const date = new Date();
     this.initaliseCalendar(date.getFullYear(), date.getMonth(), 1);
-    // this.user
-    // this.title ="";
-    // this.description ="";
-    // this.start_time = "11:00"
-    // this.end_time = "15:30"
     this.schedule = {} as Schedules;
     this.editSchedule = {} as Schedules;
     this.editSchedule.schedule = [
@@ -104,10 +99,9 @@ export class ScheduleComponent implements OnInit {
       },
     ];
     this.currentAction = 'create';
-    // this.start_time = {} as Time
-    // this.end_time = {} as Time
-    // this.setCalendarStyling();
     const id = localStorage.getItem('userId');
+    const sessionID = sessionStorage.getItem('user_id');
+    
     if (id) {
       this.user = await this.userService.getUserDataId(id);
       this.schedule = await this.userService.getScheduleData(id);
@@ -317,15 +311,26 @@ export class ScheduleComponent implements OnInit {
           title: this.title,
         });
         //console.log(this.schedule);
+        this.userService.makeAppointment(this.schedule);
+        this.assignAppointments();
       }
 
-      // this.userService.makeAppointment(this.schedule);
-      // // this.assignAppointments();
       // //console.log('Created');
     }
   }
 
-  checkDateValid() {
+  checkDateValid() :boolean {
+    if (
+      this.start_time == undefined ||
+      this.end_time == undefined ||
+      this.description == undefined ||
+      this.title == undefined
+      )
+      {
+        return false;
+      }
+    console.log(this.selectedDate);
+    
     const offset = this.selectedDate.getTimezoneOffset();
     const tempDate = new Date(this.selectedDate.getTime() - offset * 60 * 1000);
     const searchSpace = this.schedule.schedule.filter((schedule) => {
@@ -350,32 +355,42 @@ export class ScheduleComponent implements OnInit {
       );
     });
 
-    if (this.start_time >= this.end_time){
-      alert("Start time must be earlier than end_time")
+    if (
+      searchSpace[0].description == this.editSchedule.schedule[0].description &&
+      searchSpace[0].title == this.editSchedule.schedule[0].title &&
+      searchSpace[0].start_time == this.editSchedule.schedule[0].start_time &&
+      searchSpace[0].end_time == this.editSchedule.schedule[0].end_time 
+    )
+    {
+      searchSpace.splice(0,2)
+    }
+
+    console.log(searchSpace);
+    console.log(this.editSchedule);
+    
+    
+
+    if (this.start_time >= this.end_time) {
+      alert('Start time must be earlier than end_time');
     }
 
     for (let k = 0; k < searchSpace.length; k++) {
       const schedule = searchSpace[k];
-      const startTime = schedule.start_time.split(" ")[1];
-      const endTime = schedule.end_time.split(" ")[1];
+      const startTime = schedule.start_time.split(' ')[1];
+      const endTime = schedule.end_time.split(' ')[1];
 
-      if (this.start_time >= startTime && this.start_time <= endTime)
-      {
-        alert("This appointments start time clashes with another appointment")
-        return false
+      if (this.start_time >= startTime && this.start_time <= endTime) {
+        alert('This appointments start time clashes with another appointment');
+        return false;
       }
-      if (this.end_time >= startTime && this.end_time <= endTime)
-      {
-        alert("This appointments end time clashes with another appointment")
-        return false
+      if (this.end_time >= startTime && this.end_time <= endTime) {
+        alert('This appointments end time clashes with another appointment');
+        return false;
       }
     }
     return true;
   }
 
-  checkInputsFilled(){
-    
-  }
 
   editAppointment(
     start_time: string,
@@ -420,40 +435,51 @@ export class ScheduleComponent implements OnInit {
     }
     this.description = description;
     this.title = title;
-    this.end_time = end_time.slice(end_time.indexOf(' ')).trim();
-    this.start_time = start_time.slice(start_time.indexOf(' ')).trim();
+    if (end_time.slice(end_time.indexOf(' ')).trim().length == 5)
+      this.end_time = end_time.slice(end_time.indexOf(' ')).trim();
+    else this.end_time = '0' + end_time.slice(end_time.indexOf(' ')).trim();
 
+    if (start_time.slice(start_time.indexOf(' ')).trim().length == 5)
+      this.start_time = start_time.slice(start_time.indexOf(' ')).trim();
+    else
+      this.start_time = '0' + start_time.slice(start_time.indexOf(' ')).trim();
     chipElement?.classList.add('editing');
 
     this.currentAction = 'edit';
   }
 
   updateAppointment(): void {
-    const currentSchedule = this.schedule.schedule.find((schedule) => {
-      return (
-        schedule.description === this.editSchedule.schedule[0].description &&
-        schedule.start_time === this.editSchedule.schedule[0].start_time &&
-        schedule.end_time === this.editSchedule.schedule[0].end_time &&
-        schedule.title === this.editSchedule.schedule[0].title
-      );
-    });
-
-    this.schedule.schedule.push({
-      start_time: this.formatedDate + ' ' + this.start_time,
-      end_time: this.formatedDate + ' ' + this.end_time,
-      description: this.description,
-      title: this.title,
-    });
-
-    if (currentSchedule) {
-      const indexToDelete = this.schedule.schedule.indexOf(currentSchedule);
-      //console.log(indexToDelete);
-      this.schedule.schedule.splice(indexToDelete, 1);
+    if (!this.checkDateValid())
+    {
+      return;
     }
-
-    if (currentSchedule) this.userService.editAppointment(this.schedule);
-    else {
-      throw Error();
+    else{
+      const currentSchedule = this.schedule.schedule.find((schedule) => {
+        return (
+          schedule.description === this.editSchedule.schedule[0].description &&
+          schedule.start_time === this.editSchedule.schedule[0].start_time &&
+          schedule.end_time === this.editSchedule.schedule[0].end_time &&
+          schedule.title === this.editSchedule.schedule[0].title
+        );
+      });
+  
+      this.schedule.schedule.push({
+        start_time: this.formatedDate + ' ' + this.start_time,
+        end_time: this.formatedDate + ' ' + this.end_time,
+        description: this.description,
+        title: this.title,
+      });
+  
+      if (currentSchedule) {
+        const indexToDelete = this.schedule.schedule.indexOf(currentSchedule);
+        //console.log(indexToDelete);
+        this.schedule.schedule.splice(indexToDelete, 1);
+      }
+  
+      if (currentSchedule) this.userService.editAppointment(this.schedule);
+      else {
+        throw Error();
+      }
     }
   }
 
@@ -470,6 +496,10 @@ export class ScheduleComponent implements OnInit {
       const indexToDelete = this.schedule.schedule.indexOf(scheduleToDelete);
       this.schedule.schedule.splice(indexToDelete, 1);
       this.userService.editAppointment(this.schedule);
+      this.closeAppointment()
+    }
+    else{
+      this.closeAppointment()
     }
     //console.log(scheduleToDelete);
   }
@@ -498,5 +528,13 @@ export class ScheduleComponent implements OnInit {
     });
 
     //console.log(this.schedule);
+  }
+
+  closeAppointment(): void {
+    this.currentAction = 'create';
+    this.title = '';
+    this.description = '';
+    this.start_time = '';
+    this.end_time = '';
   }
 }

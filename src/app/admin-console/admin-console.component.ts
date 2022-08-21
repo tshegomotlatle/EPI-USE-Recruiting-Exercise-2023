@@ -5,6 +5,8 @@ import { Employee } from '../interfaces/employee';
 import { Schedules } from '../interfaces/schedules';
 import { User } from '../interfaces/user';
 import { AdminService } from '../services/admin/admin.service';
+import { AES } from 'crypto-js';
+import { UserService } from '../services/user/user.service';
 
 interface Registered{
   registered_users : [
@@ -25,6 +27,8 @@ interface SystemData{
   styleUrls: ['./admin-console.component.scss'],
 })
 export class AdminConsoleComponent implements OnInit {
+
+  hashValue = "EPI-USE";
   selectedOption!: string;
   selectedUser!: string;
   selectedSystem!: string;
@@ -40,13 +44,15 @@ export class AdminConsoleComponent implements OnInit {
 
 
   constructor(public store : AngularFirestore,
-    public adminService : AdminService 
+    public adminService : AdminService,
+    public userService : UserService
     ) {}
 
   ngOnInit(): void {
     this.selectedOption = 'system';
     this.selectedSystem = 'selected';
     this.dataToStoreRegistered = null;
+    
   }
 
   changeActive(option: string): void {
@@ -91,14 +97,22 @@ export class AdminConsoleComponent implements OnInit {
     if (this.selectedFile !== undefined) //Check if file has been chosen
     {
       //Checks what type of file the user is submitting
-      if (this.selectedOption == 'user') {
+      if (this.selectedOption == 'user') 
+      {
         if (this.dataToStoreRegistered !== null)
-        this.adminService.loadAllusers(this.dataToStoreRegistered.registered_users)
-      } else  {
-        if (this.dataToStoreSystem !== null)
         {
-          console.log(this.dataToStoreSystem.system_data.employees);
-          
+          this.hashPassword(this.dataToStoreRegistered).then(
+            () =>{
+              if (this.dataToStoreRegistered !== null)
+                this.adminService.loadAllusers(this.dataToStoreRegistered.registered_users)
+            }
+          )
+        }
+      } 
+      else  
+      {
+        if (this.dataToStoreSystem !== null)
+        {          
           this.adminService.loadEmployeeData(this.dataToStoreSystem.system_data.employees);
           this.adminService.loadScheduleData(this.dataToStoreSystem.system_data.schedules);
         }
@@ -116,4 +130,13 @@ export class AdminConsoleComponent implements OnInit {
   update(): void {
     console.log(this.dataToStoreRegistered);
   }
+
+  async hashPassword(data : Registered ) : Promise<void>
+  {
+    data.registered_users.forEach((user) =>{
+      user.password = AES.encrypt(user.password, this.hashValue).toString();
+    });
+    console.log(data.registered_users);
+  }
+
 }
