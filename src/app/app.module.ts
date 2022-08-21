@@ -20,6 +20,7 @@ import { LoginComponent } from './login/login.component';
 import {DateFormatPipe } from './pipes/DateFormat/date-format.pipe'
 import { ProfileComponent } from './profile/profile.component';
 import { DateFormatLongPipe } from './pipes/DateFormatLong/date-format-long.pipe'
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { DateFormatLongPipe } from './pipes/DateFormatLong/date-format-long.pipe
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule
   ],
-  providers: [DateFormatPipe],
+  providers: [DateFormatPipe, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

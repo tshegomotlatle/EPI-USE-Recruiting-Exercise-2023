@@ -8,6 +8,9 @@ import { ScheduleComponent } from './schedule/schedule.component';
 
 const routes: Routes = [
   { path: 'hierarchy', component: HierarchyComponent },
+  // { path: '**', redirectTo: "hierarchy" },
+  // { path: '', redirectTo: "hierarchy" },
+  { path: '',   redirectTo: '/hierarchy', pathMatch: 'full' },
   { path: 'schedule', component: ScheduleComponent },
   { path: 'admin', component: AdminConsoleComponent },
   { path: 'login', component: LoginComponent },
