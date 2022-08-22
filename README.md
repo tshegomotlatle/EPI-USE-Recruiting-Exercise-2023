@@ -19,6 +19,8 @@
 - Logged in user can edit their profile, which includes username, name surname and password
 - Logged in user can have a profile picture asscoiated with their profile
 
+# Architectural Design
+![My Image](images/14.png)
 
 # Setup Instructions 
 ## Downloads
