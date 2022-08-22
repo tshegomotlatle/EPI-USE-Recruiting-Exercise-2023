@@ -18,6 +18,8 @@
 ## Additional functionality
 - Logged in user can edit their profile, which includes username, name surname and password
 - Logged in user can have a profile picture asscoiated with their profile
+- Logging in as admin allows you to upload json files of registered and system data that wil be added to the database
+- Admin username: admin,  password: admin@123 to access this menu 
 
 # Architectural Design
 ![My Image](images/14.png)
@@ -56,6 +58,10 @@
 ![My Image](images/8.png)
 ![My Image](images/11.png)
 ![My Image](images/12.png)
+
+## Admin Settings
+![My Image](images/15.png)
+![My Image](images/16.png)
 
 
 
