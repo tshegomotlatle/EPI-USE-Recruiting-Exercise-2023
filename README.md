@@ -28,4 +28,29 @@
 - run the command "yarn add @angular/cli"
 - run the command "ng serve" and the application will be hosted on localhost:4200
 
-<img src="https://ibb.co/FVnQvFS" alt="Alt text" title="Optional title">
+#Application Screens
+
+##Menu
+![My Image](images/13.png)
+
+##Calendar
+![My Image](images/1.png)
+
+##Create appointment window
+![My Image](images/3.png)
+
+##Update and Delete window
+![My Image](images/4.png)
+
+##Hierarchy collapsibles
+![My Image](images/5.png)
+![My Image](images/6.png)
+![My Image](images/7.png)
+
+##Hierarchy Tree
+![My Image](images/8.png)
+![My Image](images/11.png)
+![My Image](images/12.png)
+
+
+
