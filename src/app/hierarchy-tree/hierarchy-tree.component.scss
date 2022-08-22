@@ -29,3 +29,20 @@ button.close {
 .tf-tree.tf-gap-lg.pt-5 {
     height: 100vh;
 }
+
+.containerHierachy{
+    margin: 5rem;
+}
+
+.scheduleStartTime{
+ flex: 30%;
+}
+
+.scheduleEndTime{
+ flex: 20%;
+}
+
+.ScheduleDescription{
+ flex: 50%;
+ overflow: hidden;
+}

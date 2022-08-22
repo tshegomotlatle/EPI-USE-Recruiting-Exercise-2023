@@ -41,10 +41,10 @@
           {{selectedUser.id}} <br>
         </div>
         <div class="mt-4">
-          <div class="chip w-100 d-flex justify-content-between mt-2" *ngFor="let schedule of selectedSchedule.schedule">
-            <span>{{schedule.start_time | dateFormat}}-{{schedule.end_time | dateFormat}}</span>
-            <span>{{schedule.title}}</span>
-            <span class="material-icons editButton">edit</span>
+          <div class="chip w-100 d-flex  mt-2" *ngFor="let schedule of selectedSchedule.schedule">
+            <span class="scheduleStartTime">{{schedule.start_time | dateFormat}}-{{schedule.end_time | dateFormat}}</span>
+            <span class="scheduleEndTime">{{schedule.title}}</span>
+            <span class="ScheduleDescription">{{schedule.description}}</span>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminConsoleComponent } from './admin-console/admin-console.component';
@@ -9,11 +10,9 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { UserService } from './services/user/user.service';
 
 const routes: Routes = [
-  { path: 'hierarchy', component: HierarchyComponent, canActivate: [IsLoggedGuard] },
-  // { path: '**', redirectTo: "hierarchy" },
-  // { path: '', redirectTo: "hierarchy" },
-  { path: '',   redirectTo: '/hierarchy', pathMatch: 'full'},
   { path: 'schedule', component: ScheduleComponent, canActivate: [IsLoggedGuard]  },
+  { path: 'hierarchy', component: HierarchyComponent, canActivate: [IsLoggedGuard] },
+  { path: '',   redirectTo: '/hierarchy', pathMatch: 'full'},
   { path: 'admin', component: AdminConsoleComponent, canActivate: [IsLoggedGuard]  },
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [IsLoggedGuard]  },
@@ -22,6 +21,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [IsLoggedGuard, UserService]
+  providers: [IsLoggedGuard, UserService,  [{provide: LocationStrategy, useClass: HashLocationStrategy}],]
 })
 export class AppRoutingModule { }

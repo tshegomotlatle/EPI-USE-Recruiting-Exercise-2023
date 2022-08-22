@@ -14,7 +14,7 @@ export class IsLoggedGuard implements CanActivate {
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const loggedData = this.userService.getSessionData();
-    // console.log(loggedData.loggedIn);
+    console.log(loggedData.loggedIn);
     
     if (loggedData.loggedIn == "true")
     {

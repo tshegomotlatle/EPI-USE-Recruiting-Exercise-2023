@@ -167,7 +167,7 @@ export class HierarchyViewComponent implements OnInit {
   tranformDate(date: string) : string{
     date = date.split(" ")[0]
     const dateArray = date.split("-");
-    console.log(dateArray);
+    // console.log(dateArray);
     
     return dateArray[2] + " " + this.months[parseInt(dateArray[1])] + " " + dateArray[0];
   }
