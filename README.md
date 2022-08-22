@@ -1,7 +1,7 @@
 # Scheduler
 ## A recruitment exercise completed by Tshegofatsho Motlatle
 - www.linkedin.com/in/tshegofatsho-motlatle-41ab89239
-- motlatletshego@gmail.com
+- u17066736@tuks.co.za
 
 # System functionality
 ## Core functionality
